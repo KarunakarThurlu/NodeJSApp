@@ -31,7 +31,6 @@ app.use((request, response, next) => {
 });
 
 //MongoDB config
-//const url = "mongodb+srv://admin:admin@karunakar.slrxs.gcp.mongodb.net/testdb?retryWrites=true&w=majority";
 const url = "mongodb://localhost:27017/testdb";
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 const con = mongoose.connection
