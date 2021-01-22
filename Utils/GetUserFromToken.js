@@ -10,5 +10,4 @@ exports.getUserFromToken = async (request) => {
     let user = await User.findOne({ email: decodedtoken.sub }).populate("roles");
     console.info(moment(new Date(), 'DD MM YYYY hh:mm:ss') + " Exit into getUserName from Token method")
     return user !== null ? user._doc : null;
-    console.info(new Date() + " Exit into getUserName from Token method")
 }

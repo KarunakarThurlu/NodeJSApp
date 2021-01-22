@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const getUser = require('../Utils/GetUserFromToken');
 const JWTConstants = require("../JWTUtils/JWTConstants");
 const moment = require('moment');
+const redis = require('redis');
 
 //login
 exports.login = async (request, response, next) => {
@@ -102,10 +103,12 @@ exports.updateUser = async (request, response) => {
 
 //Get AllUsers
 exports.getallusers = async (request, response) => {
+    const client = redis.createClient(6379)
     try {
         console.info(moment().toNow() + " Enter into getAllUsers of UserController!.")
         const users = await User.find().populate('roles');
         if (users) {
+            client.setex('user:getallusers', 3600, JSON.stringify(users))
             return response.json({ "data": users, "statusCode": 200, "message": "OK" })
         } else {
             return response.json({ "data": [], "statusCode": 400, "message": "Bad Request" })

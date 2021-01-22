@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const app = express();
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
+require('./Config/MongoDBConfig');
 
 const port = 2021;
 app.listen(port, () => {
@@ -30,16 +31,8 @@ app.use((request, response, next) => {
     next();
 });
 
-//MongoDB config
-const url = "mongodb://localhost:27017/testdb";
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-const con = mongoose.connection
-con.on('open', () => { console.log("DB is Connected!") })
-
 
 //RouterConfigs
-const productRouter = require("./routes/product.router");
-app.use('/products', productRouter);
 
 const userRouter = require("./routes/UserRouter");
 app.use('/user', userRouter);
